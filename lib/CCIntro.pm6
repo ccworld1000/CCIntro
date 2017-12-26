@@ -1,7 +1,7 @@
 #!/usr/bin/env perl6
 # -*- coding: utf-8 -*-
 #
-#  CCIntro.pm6 
+#  CCIntro.pm6
 #
 #  Created by CC on 2017/12/25.
 #  Copyright 2017 youhua deng (deng you hua | CC) <ccworld1000@gmail.com>
@@ -23,3 +23,42 @@
 #  MA 02110-1301, USA.
 #
 #
+
+our $basePath is export = '';
+
+our $pageTitle is export = '';
+our $pageDescription is export = '';
+our $name is export = '';
+our $description is export = '';
+our $basicInfo is export = '';
+our $information is export = '';
+our $specialities is export = '';
+our $skillsList is export = '';
+our $skillsDescription is export = '';
+our $GitHubID is export = '';
+our $community is export = '';
+our $experience is export = '';
+our $project is export = '';
+our $openSource is export = '';
+our $interests is export = '';
+
+
+
+sub genHTML {
+
+}
+
+sub genBody {
+
+}
+
+sub genLink {
+
+}
+
+sub genHeader {
+
+}
+
+
+$html.say;
