@@ -47,9 +47,9 @@ sub genDivHeader is export {
     <div id="header">
         <div class="row animated fadeInDown">
             <div class="large-2 columns">
-                <h2>{$name}</h2>
-                <h6 class="light">{$description}</h6></div>
-            {$basicInfo}
+                <h2> $name </h2>
+                <h6 class="light"> $description </h6></div>
+             $basicInfo
             <div class="large-1 columns text-right website"><a href="mailto:ccworld1000@gmail.com"><i class="fi-arrow-down"></i>反馈</a></div>
         </div>
     </div>
@@ -63,13 +63,13 @@ sub genDivMain is export {
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-torso"></i> 个人简介</h4>
                 <div class="info">
-                    {$information}
+                     $information
                 </div>
             </div>
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-like"></i> 技能专长</h4>
                 <div class="row specialities">
-                    {$specialities}
+                     $specialities
                 </div>
             </div>
             <div class="avoid_pagebreak animated fadeInUp">
@@ -77,11 +77,11 @@ sub genDivMain is export {
                 <div class="row skill">
                     <div class="large-7 columns animated fadeIn">
                         <h6>编程技能</h6>
-                        {$skillsList}
+                         $skillsList
                     </div>
                     <div class="large-5 columns animated fadeIn">
                         <h6>能力简述</h6>
-                        {$skillsDescription}
+                         $skillsDescription
                     </div>
                 </div>
             </div>
@@ -89,7 +89,7 @@ sub genDivMain is export {
                 <h4 class="title"><i class="fi-social-github"></i> 社区经验</h4>
                 <div class="community">
                     <p>Github：
-                        <a href="https://github.com/{$GitHubID}"><img src="http://ghchart.rshah.org/{$GitHubID}" alt="Github Chart of {$GitHubID}" /></a></p>
+                        <a href="https://github.com/$GitHubID"><img src="http://ghchart.rshah.org/$GitHubID" alt="Github Chart of $GitHubID" /></a></p>
                     <hr />
                     <table>
                         <thead>
@@ -99,7 +99,7 @@ sub genDivMain is export {
                             </tr>
                         </thead>
                         <tbody>
-                            {$community}
+                             $community
                         </tbody>
                     </table>
                 </div>
@@ -109,27 +109,27 @@ sub genDivMain is export {
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-lightbulb"></i> 个人经验</h4>
                 <div class="row experience">
-                    {$experience}
+                     $experience
                 </div>
             </div>
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-flag"></i> 项目经历（部分）</h4>
                 <div class="pro_surround">
                     <div class="pro animated">
-                        {$project}
+                         $project
                     </div>
                 </div>
             </div>
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-book"></i> 开源项目</h4>
                 <div class="row recognitions">
-                    {$openSource}
+                     $openSource
                 </div>
             </div>
             <div class="avoid_pagebreak animated fadeInUp">
                 <h4 class="title"><i class="fi-link"></i> 扩展技能</h4>
                 <div class="row interests">
-                    {$interests}
+                     $interests
                 </div>
             </div>
         </div>
@@ -195,16 +195,16 @@ sub genScript is export {
 }
 
 sub genHeader is export {
-	my $link = genLink(); 
+	my $link = genLink();
 	my $script = genScript();
 	my $header = qq {
 <head>
     <meta charset="utf-8" />
-    <title>{$pageTitle}</title>
-    <meta name="description" content="{$pageDescription}" />
+    <title> $pageTitle </title>
+    <meta name="description" content="$pageDescription" />
     <meta name="CCIntro" content="https://github.com/ccworld1000/CCIntro" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    $script 
+    $script
     $link
 </head>
 	};
@@ -223,4 +223,3 @@ $body
 </html>
 };
 }
-
