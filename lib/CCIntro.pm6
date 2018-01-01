@@ -24,6 +24,8 @@
 #
 #
 
+use JSON::Fast;
+
 our $basePath is export = '';
 our $pageTitle is export = '';
 our $pageDescription is export = '';
@@ -41,6 +43,10 @@ our $project is export = '';
 our $openSource is export = '';
 our $interests is export = '';
 
+sub genHolder is export {
+	my $string = shift @_;
+	my $holder = "%{$string}%"
+}
 
 sub genDivHeader is export {
 	my $divHeader = qq {
@@ -222,4 +228,267 @@ $header
 $body
 </html>
 };
+}
+
+###############################################
+
+sub p {
+  my $p =  shift @_;
+  my $content = "<p>{$p}</p>";
+}
+
+
+sub strong {
+  my $strong =  shift @_;
+  return "<strong>{$strong}</strong>";
+}
+
+sub div {
+	my $div = shift @_;
+	return "<div>{$div}</div>"
+}
+
+sub a {
+	my ($a, $link) = @_;
+	return "<a href='$link'>{$a}</a>"
+}
+
+our %basicInfoData is export = ();
+
+sub genBasicInfo is export {
+	my $content = "";
+
+	for %basicInfoData.kv -> $k, $v {
+		my @valueArray = @($v);
+		my $valueHtml = "";
+		for (@valueArray) {
+			$valueHtml = $valueHtml ~ "<li>{$_}</li>"
+		}
+
+		$content = $content ~
+				"<div class=\"large-3 columns\">" ~
+						"<div class=\"row\">" ~
+						"<div class=\"small-4 columns light2\">{$k}</div>" ~
+						"<div class=\"small-8 columns border-left light2\">" ~
+						"<ul class=\"no-bullet\">" ~
+						$valueHtml ~
+						"</ul>" ~
+						"</div>" ~
+						"</div>" ~
+				"</div>";
+	}
+
+	return $content;
+}
+
+our @informationData is export = '';
+
+sub genInformation is export {
+	my $content = '';
+
+	for (@informationData) {
+		for (@($_)) {
+			$content = $content ~ p($_);
+		}
+	}
+
+	return $content;
+}
+
+our %specialitiesData is export = ();
+
+sub genSpecialities is export {
+	my $content = '';
+
+	my $index = 1;
+	for %specialitiesData.kv -> $k, $v {
+		my $valueInt = Int($v);
+		my $left = 100 - $valueInt;
+
+		$content = $content ~
+					"<div class=\"large-4 medium-4 small-6 columns\">" ~
+							"<ul data-pie-id=\"$index\" class=\"pie_desc\">" ~
+							"<li data-value=\"{$valueInt}\">" ~
+							"<div class=\"skill_info\"><span class=\"skill_name\">{$k}</span><span class=\"skill_level\">{$valueInt}</span></div>" ~
+							"</li>" ~
+							"<li data-value=\"$left\"></li>" ~
+							"</ul>" ~
+							"<div id=\"$index\" class=\"pie  animated bounceIn\"></div>" ~
+					"</div>";
+		$index++;
+	}
+
+	return $content;
+}
+
+our %skillsListData is export = ();
+
+sub genSkillsList is export {
+	my $content = '';
+
+	for %skillsListData.kv -> $k, $v {
+		my $valueInt = Int($v);
+		my $roundHtml = '';
+		# for (0 .. 8 ) {
+		for (0 .. 7 ) {
+			my $li = '';
+			if ($valueInt > $_ ) {
+				$li = "<li><span></span></li>";
+			} else {
+				$li = "<li><span class=\"grey\"></span></li>";
+			}
+
+			$$roundHtml = $roundHtml ~ $li;
+		}
+
+		$content = $content ~
+				"<ul class=\"small-block-grid-2\">" ~
+						"<li class=\"name\">{$k}</li>" ~
+						"<li>" ~
+						"<ul class=\"small-block-grid-8 ellipses\">" ~
+						$roundHtml ~
+						"</ul>" ~
+						"</li>" ~
+				"</ul>";
+	}
+
+	return $content;
+}
+
+our @skillsDescription is export = '';
+
+sub genSkillsDescription is export {
+	my $content = '';
+
+	for (@skillsDescription) {
+		for (@($_)) {
+			$content = $content ~ "<div class=\"name\">{$_}</div>";
+		}
+	}
+
+	return $content;
+}
+
+our %experienceData is export = ();
+
+sub genExperience is export {
+	my $content = "";
+
+	for %experienceData.kv -> $k, $v {
+		my @valueArray = @($v);
+		my $valueHtml = "";
+		for (@valueArray) {
+			$valueHtml = $valueHtml ~ "<div class=\"date\">{$_}</div>"
+		}
+
+		$content = $content ~
+				"<div class=\"large-6 medium-6 small-12 columns animated fadeIn\">" ~
+						"<div class=\"year\">{$k}</div>" ~
+						"<div class=\"exp_data\">" ~
+						$valueHtml ~
+						"</div>" ~
+				"</div>";
+	}
+
+	return $content;
+}
+
+our @projectData is export = '';
+
+sub genProject is export {
+    my $content = "";
+
+		for (@projectData) {
+			for (@($_)) {
+				my $proDescsHtml = '';
+				my $valueDict = $_;
+
+				my $category = $valueDict{"category"};
+				my $pro_name = $valueDict{"pro_name"};
+				my @proDescs = $valueDict{"pro_desc"};
+
+        for (@proDescs) {
+            $proDescsHtml = $proDescsHtml ~ "<li class=\"desc_line\">{$_}</li>"
+        }
+
+        $content = $content ~
+            "<div class=\"pro_item\">" ~
+                "<div class=\"category\">{$category}</div>" ~
+                "<div class=\"pro_name\">{$pro_name}</div>" ~
+                "<div class=\"pro_desc\">" ~
+                "<ul>" ~
+                $proDescsHtml ~
+                "</ul>" ~
+                "</div>" ~
+            "</div>";
+			}
+		}
+
+    return $content;
+}
+
+our @openSourceData is export = '';
+
+sub genOpenSource is export {
+	my $content = "";
+
+	for (@openSourceData) {
+		for (@($_)) {
+			my $valueDict = $_;
+
+			my $name = $valueDict{"name"};
+			my $title = $valueDict{"title"};
+			my $description = $valueDict{"description"};
+			my $link = $valueDict{"link"};
+
+			$content = $content ~
+					"<div class=\"large-12 small-12 columns animated fadeIn\">" ~
+							"<div class=\"row\">" ~
+							"<div class=\"large-3 medium-3 small-4 columns\">" ~
+							"<div class=\"category\">{$name}</div><img src=\"$basePath/img/ribbon.svg\" width=\"100\" height=\"131\" alt=\"{$title}\" class=\"ribbon\"></div>" ~
+							"<div class=\"large-9 medium-9 small-8 columns\">" ~
+							"<div class=\"recog_data\">" ~
+							"<div class=\"title\"><a href='$link'>{$title}</a></div>" ~
+							"<div class=\"desc\">{$description}</div>" ~
+							"</div>" ~
+							"</div>" ~
+							"</div>" ~
+					"</div>";
+		}
+	}
+
+	return $content;
+}
+
+our %interestsData is export = ();
+
+sub genInterests is export {
+	my $content = '';
+
+	for %interestsData.kv -> $k, $v {
+			$content = $content ~
+					"<div class=\"large-3 small-6 medium-3 columns animated bounceIn\">" ~
+							"<div class=\"int_icon\"><i class=\"{$v}\"></i>" ~
+							"<div class=\"activity\">{$k}</div>" ~
+							"</div>" ~
+					"</div>";
+	}
+
+	return $content;
+}
+
+our %communityData is export = ();
+
+sub genCommunity is export {
+	my $content = '';
+
+	for %communityData.kv -> $k, $v {
+			$content = $content ~
+					"<tr>" ~
+							"<td>{$k}</td>" ~
+							"<td>{$v}</td>" ~
+					"</tr>";
+	}
+
+	return $content;
 }
