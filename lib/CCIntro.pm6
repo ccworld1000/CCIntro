@@ -26,6 +26,7 @@
 
 use JSON::Fast;
 
+# holder var
 our $basePath is export = '';
 our $pageTitle is export = '';
 our $pageDescription is export = '';
@@ -42,6 +43,18 @@ our $experience is export = '';
 our $project is export = '';
 our $openSource is export = '';
 our $interests is export = '';
+
+# use data
+our %basicInfoData is export = ();
+our @informationData is export = ();
+our %specialitiesData is export = ();
+our %skillsListData is export = ();
+our @skillsDescriptionData is export = ();
+our %experienceData is export = ();
+our @projectData is export = ();
+our @openSourceData is export = ();
+our %interestsData is export = ();
+our %communityData is export = ();
 
 sub genHolder is export {
 	my $string = shift @_;
@@ -173,7 +186,6 @@ sub genBody is export {
     </script>
 </body>
 	};
-
 }
 
 sub genLink is export {
@@ -214,7 +226,6 @@ sub genHeader is export {
     $link
 </head>
 	};
-
 }
 
 sub genHTML is export {
@@ -237,7 +248,6 @@ sub p {
   my $content = "<p>{$p}</p>";
 }
 
-
 sub strong {
   my $strong =  shift @_;
   return "<strong>{$strong}</strong>";
@@ -252,8 +262,6 @@ sub a {
 	my ($a, $link) = @_;
 	return "<a href='$link'>{$a}</a>"
 }
-
-our %basicInfoData is export = ();
 
 sub genBasicInfo is export {
 	my $content = "";
@@ -281,8 +289,6 @@ sub genBasicInfo is export {
 	return $content;
 }
 
-our @informationData is export = '';
-
 sub genInformation is export {
 	my $content = '';
 
@@ -294,8 +300,6 @@ sub genInformation is export {
 
 	return $content;
 }
-
-our %specialitiesData is export = ();
 
 sub genSpecialities is export {
 	my $content = '';
@@ -320,8 +324,6 @@ sub genSpecialities is export {
 
 	return $content;
 }
-
-our %skillsListData is export = ();
 
 sub genSkillsList is export {
 	my $content = '';
@@ -355,12 +357,10 @@ sub genSkillsList is export {
 	return $content;
 }
 
-our @skillsDescription is export = '';
-
 sub genSkillsDescription is export {
 	my $content = '';
 
-	for (@skillsDescription) {
+	for (@skillsDescriptionData) {
 		for (@($_)) {
 			$content = $content ~ "<div class=\"name\">{$_}</div>";
 		}
@@ -368,8 +368,6 @@ sub genSkillsDescription is export {
 
 	return $content;
 }
-
-our %experienceData is export = ();
 
 sub genExperience is export {
 	my $content = "";
@@ -392,8 +390,6 @@ sub genExperience is export {
 
 	return $content;
 }
-
-our @projectData is export = '';
 
 sub genProject is export {
     my $content = "";
@@ -427,8 +423,6 @@ sub genProject is export {
     return $content;
 }
 
-our @openSourceData is export = '';
-
 sub genOpenSource is export {
 	my $content = "";
 
@@ -460,8 +454,6 @@ sub genOpenSource is export {
 	return $content;
 }
 
-our %interestsData is export = ();
-
 sub genInterests is export {
 	my $content = '';
 
@@ -476,8 +468,6 @@ sub genInterests is export {
 
 	return $content;
 }
-
-our %communityData is export = ();
 
 sub genCommunity is export {
 	my $content = '';
