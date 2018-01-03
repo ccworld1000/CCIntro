@@ -56,6 +56,9 @@ our @openSourceData is export = ();
 our %interestsData is export = ();
 our %communityData is export = ();
 
+#music
+our $musicMP3Name is export = '';
+
 sub genHolder is export {
 	my $string = shift @_;
 	my $holder = "%{$string}%"
@@ -178,6 +181,13 @@ sub genBody is export {
     $divHeader
     $divMain
     $divFooter
+		<script>
+    var sound = new Howl({
+      src: ['$musicMP3Name']
+    });
+
+		sound.play();
+		</script>
     <script type="text/javascript">
     Pizza.init(document.body, \{
         donut: true,
@@ -204,6 +214,7 @@ sub genLink is export {
 
 sub genScript is export {
 	my $script = qq {
+		<script type='text/javascript' src='$basePath/js/vendor/howler.js'></script>
     <script type='text/javascript' src='$basePath/js/vendor/modernizr.js'></script>
     <script src="$basePath/js/jquery-2.x.min.js" type="text/javascript"></script>
     <script src="$basePath/js/foundation.min.js" type="text/javascript"></script>
