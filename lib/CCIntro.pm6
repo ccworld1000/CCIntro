@@ -164,8 +164,13 @@ sub genDivFooter is export {
     <div class="row footer">
         <div class="large-12 small-12 medium-12 text-center ">
             <div class="border text-center "></div>
-            <p class="copyright">2017 - now <a href="https://github.com/ccworld1000">CC</a> &
-                <a href="https://github.com/ccworld1000">ccworld1000</a></p>
+            <p class="copyright">
+						<!--
+						2017 - now
+						<a href="https://github.com/ccworld1000">CC</a> &
+            <a href="https://github.com/ccworld1000">ccworld1000</a> &
+						-->
+						<a href="https://github.com/ccworld1000/CCIntro">Automatic generation by CCIntro </a></p>
         </div>
     </div>
 	};
@@ -450,7 +455,7 @@ sub genOpenSource is export {
 					"<div class=\"large-12 small-12 columns animated fadeIn\">" ~
 							"<div class=\"row\">" ~
 							"<div class=\"large-3 medium-3 small-4 columns\">" ~
-							"<div class=\"category\">{$name}</div><img src=\"$basePath/img/ribbon.svg\" width=\"100\" height=\"131\" alt=\"{$title}\" class=\"ribbon\"></div>" ~
+							"<div class=\"category\" style=\"font-size:10px\">{$name}</div><img src=\"$basePath/img/ribbon.svg\" width=\"100\" height=\"131\" alt=\"{$title}\" class=\"ribbon\"></div>" ~
 							"<div class=\"large-9 medium-9 small-8 columns\">" ~
 							"<div class=\"recog_data\">" ~
 							"<div class=\"title\"><a href='$link'>{$title}</a></div>" ~
